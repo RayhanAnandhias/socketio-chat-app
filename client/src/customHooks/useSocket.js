@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 
 export const useSocket = (room, username) => {
   const [socket, setSocket] = useState();
@@ -21,7 +21,8 @@ export const useSocket = (room, username) => {
         messageType: 'CLIENT',
       });
     },
-    [socket, room, username]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [socket, room]
   );
 
   useEffect(() => {
@@ -44,7 +45,8 @@ export const useSocket = (room, username) => {
     return () => {
       s.disconnect();
     };
-  }, [room, username]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [room]);
 
   return { socketResponse, isConnected, sendData };
 };

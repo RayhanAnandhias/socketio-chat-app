@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './Message.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSocket } from '../../customHooks/useSocket';
 import { RiSendPlaneLine, RiSendPlaneFill } from 'react-icons/ri';
 import MessageList from './MessageList';
@@ -13,43 +14,38 @@ const Message = ({ room, username }) => {
 
   const { responseData } = useFetch('/message/' + room);
 
-  const addMessageToList = useCallback(
-    (val) => {
-      if (val.room == '') return;
-      setMessageList([...messageList, val]);
-    },
-    [messageList]
-  );
+  const addMessageToList = (val) => {
+    if (val.room == '') return;
+    setMessageList([...messageList, val]);
+  };
 
   useEffect(() => {
     if (responseData != undefined) {
       setMessageList([...responseData, ...messageList]);
     }
-  }, [messageList, responseData]);
+  }, [responseData]);
 
   useEffect(() => {
     console.log('Socket Response: ', socketResponse);
     addMessageToList(socketResponse);
-  }, [addMessageToList, socketResponse]);
+  }, [socketResponse]);
 
-  const sendMessage = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (messageInput != '') {
-        sendData({
-          content: messageInput,
-        });
-        addMessageToList({
-          content: messageInput,
-          username: username,
-          createdDateTime: new Date(),
-          messageType: 'CLIENT',
-        });
-        setMessageInput('');
-      }
-    },
-    [addMessageToList, messageInput, sendData, username]
-  );
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (messageInput != '') {
+      sendData({
+        content: messageInput,
+      });
+
+      addMessageToList({
+        content: messageInput,
+        username: username,
+        createdDateTime: new Date(),
+        messageType: 'CLIENT',
+      });
+      setMessageInput('');
+    }
+  };
 
   return (
     <div className="message_root_div">

@@ -1,19 +1,15 @@
-import { useCallback } from 'react';
 import './Login.css';
 import PropTypes from 'prop-types';
 
 const Login = ({ room, setRoom, username, setUsername, setLoggedIn }) => {
-  const checkForLogin = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (room == '' || username == '') {
-        alert('fill the required fields');
-      } else {
-        setLoggedIn(true);
-      }
-    },
-    [room, setLoggedIn, username]
-  );
+  const checkForLogin = (e) => {
+    e.preventDefault();
+    if (room == '' || username == '') {
+      alert('fill the required fields');
+    } else {
+      setLoggedIn(true);
+    }
+  };
 
   return (
     <div className="login_root">

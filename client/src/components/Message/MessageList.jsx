@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 
 const MessageList = ({ messageList, username }) => {
   const messagesEndRef = useRef(null);
-
-  useEffect(() => {
+  const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [messageList]);
+  };
+  useEffect(scrollToBottom, [messageList]);
 
   return (
     <div className="message_list">
